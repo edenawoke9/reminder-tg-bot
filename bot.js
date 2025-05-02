@@ -38,14 +38,6 @@ function sendDailyMessage() {
     });
 }
 
-console.log('Bot is running...');
-// Add this right after: const bot = new TelegramBot(token, { polling: true });
-bot.on('message', (msg) => {
-  if (msg.chat.type === 'group' || msg.chat.type === 'supergroup') {
-    console.log('Group ID:', msg.chat.id); // Prints the group ID (negative number)
-    console.log('Group Title:', msg.chat.title); // Prints the group name
-  }
-});
 
 
 bot.on('polling_error', (error) => {
