@@ -1,15 +1,15 @@
 import TelegramBot from 'node-telegram-bot-api';
 import cron from 'node-cron';
+import { config } from 'dotenv';
 
-
-const token = '7301479607:AAEnf4EoEviYPS1pvtVQsI95Z1sTrV3ej1s';
-
-
-const bot = new TelegramBot(token, { polling: true });
-
-
-const groupChatId = -1002247764203;
-const dailyThreadId = 17; 
+// Load environment variables
+config();
+const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
+console.log('Environment variables:', {
+  BOT_TOKEN: process.env.BOT_TOKEN,
+  GROUP_CHAT_ID: process.env.GROUP_CHAT_ID,
+  THREAD_ID: process.env.THREAD_ID
+});
 
 const dailyMessage = "🌞 Good morning! Please provide your daily update @teddzz @natty_awoke @Panther_a : \n 1. what are you working on today? \n 2. Any blockers?" 
 
@@ -23,10 +23,10 @@ cron.schedule('30 8 * * *', () => {
 
 function sendDailyMessage() {
   bot.sendMessage(
-    groupChatId,
+    process.env.GROUP_CHAT_ID,
     dailyMessage,
     {
-      message_thread_id: dailyThreadId
+      message_thread_id: process.env.THREAD_ID
      
     }
   )
@@ -37,6 +37,7 @@ function sendDailyMessage() {
       console.error('Error sending message:', error);
     });
 }
+console.log('Bot is running...');
 
 
 
